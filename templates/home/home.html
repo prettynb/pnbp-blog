@@ -1,0 +1,22 @@
+{% extends "shared/layout.html" %}
+
+{% block content %}
+
+<div>
+	<p>#public </p>
+	<hr />
+	<p>linked/<br />
+	linked/page.py</p>
+	<pre><code class="language-py">content = None
+	</code></pre>
+	<p>main.py</p>
+	<pre><code class="language-py">from linked.page import content
+	</code></pre>
+
+	<div class="mermaid">
+	graph TD;
+	    a[hello] --> b[world]
+	</div>
+</div>
+
+{% endblock %}

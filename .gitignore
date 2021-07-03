@@ -1,0 +1,14 @@
+.DS_Store
+
+**__pycache__/**
+
+*.sqlite3*
+*.sublime-project
+*.sublime-workspace
+*.pkl
+
+*.py[co]
+
+**/migrations/0*.py
+
+.env

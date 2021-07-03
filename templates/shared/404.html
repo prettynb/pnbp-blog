@@ -1,0 +1,14 @@
+{% extends 'shared/layout.html' %}
+
+
+{% block content %}
+
+<p>404 - Page doesn't exist... </p>
+<p>Search for <b>{{unavailable_content}}</b> externally?</p>
+
+<p><a href="https://duckduckgo.com/?q={{unavailable_content}}"> Duck Duck Go </a></p>
+<p><a href="https://en.wikipedia.org/wiki/Special:Search?search={{unavailable_content}}"> Wikipedia </a></p>
+<p><a href="https://en.wiktionary.org/wiki/Special:Search?search={{unavailable_content}}">Wikitionary</a></p>
+
+
+{% endblock %}
