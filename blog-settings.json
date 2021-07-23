@@ -1,18 +1,19 @@
 {
-    "NAV_BRAND": "<i class='bi bi-book-fill'></i>&nbsp;<i class='bi bi-globe2'></i>",
+    "NAV_BRAND": "<i class='bi bi-globe2'></i><i class='bi bi-book-fill'></i> ",
     "NAV_PAGES": {
         "content": "/index/",
-        "about": "/about/",
+        "about": "/obsidian-parser/",
         "contact": [
             {
-                "github": "https://github.com/prettynb/"
+                "github": "https://github.com/cbrun3"
             },
             {
                 "subname2": "/subroute2/"
             }
         ]
     },
-    "FOOTER": "<small><p>&lt;p&gt;nb&lt;/p&gt;</p>| powered by <a href=\"https://www.python.org/\">Python</a>&nbsp;,&nbsp;<a href=\"https://fastapi.tiangolo.com/\">FastAPI</a>&nbsp;,&nbsp;<a href=\"https://getbootstrap.com/\">Bootstrap</a>&nbsp;,&nbsp;and&nbsp;</a><a href=\"https://obsidian.md/\">Obsidian</a>&nbsp;via&nbsp;<a href=\"https://daringfireball.net/projects/markdown/\">markdown</a>.</small>",
+    "FOOTER": "<p><small>mail to:</small><button type=\"button\" class=\"btn btn-link\"><small>self&commat;linked.page</small></button> &nbsp;| <small>powered by <a href=\"https://www.python.org/\">Python</a>&nbsp;,&nbsp;<a href=\"https://fastapi.tiangolo.com/\">FastAPI</a>&nbsp;,&nbsp;<a href=\"https://getbootstrap.com/\">Bootstrap</a>&nbsp;,&nbsp;and&nbsp;</a><a href=\"https://obsidian.md/\">Obsidian</a>&nbsp;via&nbsp;<a href=\"https://daringfireball.net/projects/markdown/\">markdown</a>.</small></p>",
+    "TITLE": "Hello, world!",
     "darkmode": false,
     "hljs_light": "default",
     "hljs_dark": "xt256",

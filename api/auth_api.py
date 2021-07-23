@@ -1,4 +1,6 @@
-import uuid 
+import random
+import uuid
+import hashlib
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -31,12 +33,12 @@ class User(Model):
 	id = fields.IntField(pk=True)
 	username = fields.CharField(max_length=50, unique=True)
 	password_hash = fields.CharField(max_length=128)
-	tok_uuid = fields.TextField(default=str(uuid.uuid4()))
+	tok_uuid = fields.TextField(default=hashlib.sha512(str(uuid.uuid4()).encode('utf-8')).hexdigest())
+	# group = fields.TextField(default='user')
 
 	def verify_password(self, password):
 		""" """
 		return bcrypt.verify(password, self.password_hash)
-
 
 class Password(Model):
 	""" """
@@ -90,7 +92,7 @@ async def create_user(user: UserIn_Pydantic, curr_user: User_Pydantic = Depends(
 
 async def authenticate_user(username: str, password: str):
 	""" """
-	user = await User.get(username=username)
+	user = await User.filter(username=username).first()
 	if not user:
 		return False
 	if not user.verify_password(password=password):
@@ -107,7 +109,8 @@ async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
 
 	user_obj = await User_Pydantic.from_tortoise_orm(user)
 
-	new_uuid = str(uuid.uuid4())
+	new_uuid = hashlib.sha512(str(uuid.uuid4()).encode('utf-8')).hexdigest()
+
 	await User.filter(id=user_obj.id).update(**{'tok_uuid': new_uuid})
 
 	payload = user_obj.dict().copy()

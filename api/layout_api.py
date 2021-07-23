@@ -21,6 +21,7 @@ class PNBPBlogLayout(BaseModel):
 	NAV_BRAND: str
 	NAV_PAGES: dict
 	FOOTER: str
+	TITLE: str
 
 	darkmode: bool 
 	hljs_light: str
@@ -85,6 +86,7 @@ async def update_layout(NAV_BRAND: str, NAV_PAGES: dict, FOOTER: str, darkmode: 
 		NAV_BRAND=NAV_BRAND,
 		NAV_PAGES=NAV_PAGES,
 		FOOTER=FOOTER,
+		TITLE=TITLE,
 		darkmode=darkmode,
 		hljs_light=hljs_light,
 		hljs_dark=hljs_dark,
@@ -106,13 +108,14 @@ async def layout_post(lout_in: PNBPBlogLayout):
 	nb = lout_in.NAV_BRAND
 	np = lout_in.NAV_PAGES
 	f = lout_in.FOOTER
+	t = lout_in.TITLE
 	dm = lout_in.darkmode
 	hll = lout_in.hljs_light
 	hld = lout_in.hljs_dark
 	mml = lout_in.merm_light
 	mmd = lout_in.merm_dark
 
-	return await update_layout(nb, np, f, dm, hll, hld, mml, mmd)
+	return await update_layout(nb, np, f, t, dm, hll, hld, mml, mmd)
 
 
 
