@@ -4,55 +4,70 @@ RESTful blogs (aka static websites) implemented in FastAPI for [pnbp](https://gi
 
 --- 
 
-how it works :
-- ```pnbp.Notebook``` converts #public notes to HTML and contains methods to communicate with a running **pnbp-blog/** instance. 
-- **pnbp-blog/** receives HTML (& images), wraps the HTML with local extends and jinja2 template tags, and saves each statically to an .html file (avail from: notebook/[[My Next Best Note]] -> myblogurl.com/my-next-best-note and then caught and rendered by name via existence as a single slug through a general {content} view function.)
-- use **nb-commit-remote** or **nb-commit-local** to update
-- use **nb-commit-stage** to see the staged changes before updating
-- if any page is made unpublic with #public tag removal (or #private tag addition), pnbp.Notebook will delete it from the server on next commit.
-- only those notes with newer changes than most recently received will be POST-ed and images only transfer once. if you want to ensure all #public markdown files are pushed to the remote server, you can use **nb-touch-all-public**. 
+**blog** 
+- (1) receives HTML and images (wrapping HTMLwith jinja2 template tags),
+- (2) saves each page statically to an .html file,
+- (3) -> catching and rendering by name via existence as a single slug through a general {content} view function ...
+- e.g.  notebook/[[My Next Best Note]] -> myblogurl.com/my-next-best-note 
+
+via **pnbp**
+-  (1) conversion of **\#public** notes to HTML,
+-  (2) communicating with : 
+    -  ... **```nb-commit-remote```** (or **```nb-commit-local```**) to commit changes
+    -  ... **```nb-commit-stage```** to see the staged changes before updating
+
+**...** 
+-  any note made unpublic between commits (e.g. #public tag removal or #private tag addition), are deleted from the server on next commit.
+- only those notes with newer changes than most recently received will be POST-ed and images only transfer once. if you want to ensure all #public markdown files are pushed to the remote server, you can use **```nb-touch-all-public```**. 
 
 --- 
 
-**installation (for local development)** :
+#### **installation (for local development)** :
 
-(1)
+--- 
+
+##### (1) -> ```nb-git-clone-pnbp-blog```
+
+or do it manually : 
 
 ```bash
 git clone https://github.com/prettynb/pnbp-blog/ blog
 cd blog/
+```
+
+```
 pip install -r requirements.txt
 ```
 
-(2)
+--- 
 
-create a file **blog/.env**, it should look like this:
+##### (2) -> **blog/** **.env** :
+
+```nano .env```
 
 ```bash
 JWT_SECRET=long123random456alphanumeric
-echo JWT_ALGO=HS256
+JWT_ALGO=HS256
 ```
 
-^^ (pick a different **JWT_ALGO** if desired, and) generate some long alphanumeric for **JWS_SECRET** via e.g.
-
 ```py
+>>> ^^ pick a different **JWT_ALGO** if desired,  
+>>> and generate your own **JWS_SECRET**, e.g. 
 >>> import uuid
 >>> uuid.uuid4().hex
 '1ab12802724b4d9ebe92e3eecae8b4f6'
 ```
 
+--- 
 
-(3) 
+##### (3) -> hello, world! : 
 
---> immediately available to 
---> run the server with: ```python main.py```
---> in a browser: http://127.0.0.1:8000/ 
+-->  run server: ```python main.py```
+--> see browser: http://127.0.0.1:8000/ 
 
 --- 
 
-further initialization : 
-
-create your API user
+##### (4) -> create your API user : 
 
 ```py
 >>> import pnbp
@@ -69,8 +84,9 @@ create your API user
 >>> nb.refresh_token() # even while same password, now old token rejected
 ```
 
+--- 
 
-personalize it by updating your **pnbp_conf.json** file :
+##### (5) -> personalize ( [**pnbp_conf.json**](https://github.com/prettynb/pnbp/blob/master/conf_template.json) ) :
 
 ```json
     ...
@@ -87,14 +103,18 @@ personalize it by updating your **pnbp_conf.json** file :
         ]
     },
     "FOOTER": "<p>email: fake@email.com</p>",
+    "TITLE": "Alice's Blog",
     "darkmode": true,
     "hljs_light": "sublime",
     "hljs_dark": "xt256",
     "merm_light": "forest",
     "merm_dark": "default",
-    "PUB_LNK_ONLY": true
+    "PUB_LNK_ONLY": true,
+    "COMMIT_TAG": "#blog"
 }
 ```
+
+```"TITLE": ""``` ... 
 
 ```"NAV_BRAND": ""``` ... 
 
@@ -110,7 +130,18 @@ personalize it by updating your **pnbp_conf.json** file :
 
 ```"PUB_LNK_ONLY": true``` turns off rendering for any internal \[\[links\]\] to HTML that point to non- \#public notes. 
 
-...
+```"COMMIT_TAG": "#blog"``` - choose which \#tag your notebook publishes against (default: \#public).
+
+```"EXCLUDE_TAG": "#noblog"``` - choose which \#tag your notebook won't publish even if also tagged \#private (default: \#private).
+
+```"HIDE_COMMIT_TAG": true``` - turns off rendering the actual "\#public" tag from the published contents (e.g. "# this is a great #public blog page!" -> "\<h1\>this is a great  blog page!\<\\h1\>") (default: ```false```). 
+
+
+--- 
+
+##### -> **POST commits !**
+
+directly in the python repl : 
 
 ```py
 >>> # --> commit your new settings ! 
@@ -120,8 +151,13 @@ personalize it by updating your **pnbp_conf.json** file :
 >>> nb.post_commits_to_blog_api()
 ```
 
+from the command-line : 
+- ```nb-commit-settings```
+- ```nb-commit-local```
+
 --- 
 
-(included css files are to support inline [bootstrap icons](https://icons.getbootstrap.com/) by \<i\>\</i\>)
+**\*\***
+-  the only [included css](https://github.com/prettynb/pnbp-blog/tree/master/static/css) files are to support inline \<i\> [bootstrap icons](https://icons.getbootstrap.com/) \</i\>. 
 
 
