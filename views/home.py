@@ -52,7 +52,7 @@ async def contact(request: Request):
 	""" """
 	cont = await get_template_content(request)
 
-	return templates.TemplateResponse('home/contact.html', cont)
+	return templates.TemplateResponse(request, 'home/contact.html', cont)
 
 
 @router.post('/contact', include_in_schema=False)
@@ -70,7 +70,7 @@ async def home(request: Request):
 	""" """
 	cont = await get_template_content(request)
 
-	return templates.TemplateResponse('home/home.html', cont)
+	return templates.TemplateResponse(request, 'home/home.html', cont)
 
 
 @router.get('/{content}', include_in_schema=False)
@@ -85,7 +85,7 @@ async def content(request: Request, content: str):
 		return templates.TemplateResponse(f'blog/{content}.html', cont)
 	except TemplateNotFound:
 		cont.update({'unavailable_content': content})
-		return templates.TemplateResponse(f'shared/404.html', cont)
+		return templates.TemplateResponse(request, f'shared/404.html', cont)
 
 
 @router.post('/', include_in_schema=False)
