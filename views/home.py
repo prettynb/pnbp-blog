@@ -82,7 +82,7 @@ async def content(request: Request, content: str):
 	cont = await get_template_content(request)
 
 	try:
-		return templates.TemplateResponse(f'blog/{content}.html', cont)
+		return templates.TemplateResponse(request, f'blog/{content}.html', cont)
 	except TemplateNotFound:
 		cont.update({'unavailable_content': content})
 		return templates.TemplateResponse(request, f'shared/404.html', cont)
